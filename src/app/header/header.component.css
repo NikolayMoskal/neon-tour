@@ -1,0 +1,34 @@
+header {
+  display: block;
+  background: url("../_images/header/header.jpg") repeat-x left bottom;
+  height: 200px;
+  color: white;
+}
+
+.logo {
+  content: url("../_images/header/logo.jpg");
+}
+
+.menu-header {
+  margin-top: 52px;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:visited {
+  color: white;
+}
+
+a:hover {
+  color: #ffea6f;
+}
+
+a:active {
+  color: white;
+}
+
+a:link {
+  color: white;
+}

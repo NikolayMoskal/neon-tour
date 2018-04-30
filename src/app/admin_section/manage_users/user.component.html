@@ -1,0 +1,112 @@
+<div class="row">
+  <div class="form-group col-md-4">
+    <label for="users">Пользователи сайта</label>
+    <select #usr id="users" class="form-control" (change)="switchUser(usr.value)">
+      <option *ngFor="let item of users" [value]="item.id">{{item.username}}</option>
+    </select>
+    <div class="btn-group-vertical mt-3">
+      <button type="button" class="btn btn-warning" (click)="changeUserInfo()">Изменить</button>
+      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">Удалить клиента
+      </button>
+    </div>
+  </div>
+  <div class="col-md" [hidden]="!isVisibleUserInfo">
+    <div class="form-check form-check-inline">
+      <label class="form-check-label mr-3">Активен</label>
+      <input type="checkbox" class="form-check-input" id="enabled" (change)="switchChecked()" [checked]="isEnabled"
+             [disabled]="!isChanges">
+      <label class="form-check-label" for="enabled">{{isEnabled}}</label>
+    </div>
+    <div>
+      <form class="needs-validation" novalidate>
+        <fieldset [disabled]="!isChanges">
+          <div class="form-group my-2">
+            <label for="username">Имя пользователя</label>
+            <div class="input-group">
+              <input type="text" class="form-control" id="username" name="username" aria-describedby="usernameHelp"
+                     [(ngModel)]="username" required>
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" (click)="username = ''">&times;</button>
+              </div>
+            </div>
+            <small id="usernameHelp" class="text-muted">Must starts with letter and be 4-15 characters long</small>
+            <div class="alert alert-danger" *ngIf="usernameError != ''">{{usernameError}}</div>
+          </div>
+          <div class="form-group my-2">
+            <label for="password">Пароль</label>
+            <div class="input-group">
+              <input type="{{type}}" class="form-control" id="password" name="password" [(ngModel)]="userpass"
+                     aria-describedby="passwordHelp" required>
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <input type="checkbox" #showPass id="showPass" (change)="showPassword(showPass.checked)">
+                  <label for="showPass"></label>
+                </div>
+                <button type="button" class="btn btn-outline-secondary" (click)="userpass = ''">&times;</button>
+              </div>
+            </div>
+            <small id="passwordHelp" class="text-muted">Must be 8-20 characters long</small>
+            <div class="alert alert-danger" *ngIf="passwordError != ''">{{passwordError}}</div>
+          </div>
+          <div class="form-group my-2">
+            <label for="confirmPass">Подтверждение пароля</label>
+            <div class="input-group">
+              <input type="{{type}}" class="form-control" id="confirmPass" name="confirmPassword"
+                     [(ngModel)]="confirmPassword" aria-describedby="confirmPasswordHelp" required>
+              <div class="input-group-append">
+                <button type="button" class="btn btn-outline-secondary" (click)="confirmPassword = ''">&times;</button>
+              </div>
+            </div>
+            <small id="confirmPasswordHelp" class="text-muted">Must be a same as password</small>
+            <div class="alert alert-danger" *ngIf="confirmPasswordError != ''">{{confirmPasswordError}}</div>
+          </div>
+          <button type="submit" class="btn btn-success" (click)="submitChanges()" [hidden]="!isChanges">Сохранить
+          </button>
+          <button type="button" class="btn btn-danger" (click)="rejectChanges()" [hidden]="!isChanges">Отменить
+            изменения
+          </button>
+        </fieldset>
+      </form>
+    </div>
+    <div class="modal fade" id="confirmDelete">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Подтверждение удаления</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <label>Вы хотите удалить пользователя {{currentUser.username}}?</label>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" (click)="deleteUserInfo()" data-dismiss="modal">Удалить
+            </button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Отмена</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div [hidden]="currentUser.client == null">
+      <label>Данные о клиенте</label>
+      <div class="form-group">
+        <label for="firstName">Имя:</label>
+        <input type="text" class="form-control" id="firstName" [value]="currentUser.client.firstName"
+               disabled="disabled">
+      </div>
+      <div class="form-group">
+        <label for="lastName">Фамилия:</label>
+        <input type="text" class="form-control" id="lastName" [value]="currentUser.client.lastName"
+               disabled="disabled">
+      </div>
+      <div class="form-group">
+        <label for="birthDate">Дата рождения:</label>
+        <input type="date" class="form-control" id="birthDate" [value]="birthDate" disabled="disabled">
+      </div>
+      <div class="form-group">
+        <label for="email">E-mail:</label>
+        <input type="email" class="form-control" id="email" [value]="currentUser.client.email" disabled="disabled">
+      </div>
+    </div>
+  </div>
+</div>

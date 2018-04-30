@@ -1,0 +1,45 @@
+<header class="mw-100 container-fluid">
+  <div class="row">
+    <div class="col">
+      <nav class="navbar navbar-expand-md">
+        <a class="navbar-brand" routerLink="/">
+          <img src="" class="rounded-circle img-thumbnail logo" alt="Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div>
+          <nav class="collapse navbar-collapse">
+            <span class="navbar-text">
+              <h2>Туристическое агентство "Neon-Tour"</h2>
+            </span>
+          </nav>
+        </div>
+      </nav>
+    </div>
+  </div>
+  <div class="row menu-header">
+    <div class="col">
+      <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+          <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" routerLink="/">Главная</a></li>
+            <li class="nav-item"><a class="nav-link" routerLink="/select">Туристам</a></li>
+            <li class="nav-item"><a class="nav-link" routerLink="/">Home</a></li>
+            <li class="nav-item" *ngIf="isLoggedIn"><a class="nav-link" routerLink="/admin">Управление</a></li>
+          </ul>
+        </div>
+        <form class="form-inline">
+          <button class="btn btn-success" type="button">
+            <a routerLink="/login">
+              Вход на сайт
+            </a>
+          </button>
+        </form>
+      </nav>
+    </div>
+  </div>
+</header>

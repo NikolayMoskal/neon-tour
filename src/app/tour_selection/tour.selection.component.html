@@ -1,0 +1,39 @@
+<div>
+  <div class="form-group">
+    <label for="country-from">Страна проживания</label>
+    <select #selCntrFrom id="country-from" class="form-control" (change)="changeCountryFrom(selCntrFrom.value)"
+            [(ngModel)]="selCountryFrom">
+      <option *ngFor="let item of countryFrom" [value]="item.id">{{item.name}}</option>
+    </select>
+  </div>
+  <p>{{selCountryFrom}}</p>
+  <div class="form-group">
+    <label for="location-from">Город</label>
+    <select id="location-from" class="form-control">
+      <option *ngFor="let item of cities">{{item.name}}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="country-to">Куда</label>
+    <select #selCntrTo id="country-to" class="form-control" (change)="changeCountryTo(selCntrTo.value)">
+      <option *ngFor="let item of countryTo" [value]="item.id">{{item.countryName}}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="location-to">Регионы</label>
+    <select #selectLocation id="location-to" class="form-control" (change)="changeLocation(selectLocation.value)">
+      <option *ngFor="let item of locations" [value]="item.id">{{item.shortDescription}}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="category">Уровень отеля</label>
+    <select #selCategory id="category" class="form-control" (change)="changeCategory(selCategory.value)">
+      <option *ngFor="let item of categories" [value]="item.id">{{item.description}}</option>
+    </select>
+  </div>
+  <div class="form-check" *ngFor="let item of hotels">
+    <label class="form-check-label">
+      <input type="checkbox" class="form-check-input" [value]="item.id">{{item.hotelName}}
+    </label>
+  </div>
+</div>

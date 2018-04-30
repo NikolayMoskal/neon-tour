@@ -1,0 +1,32 @@
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {LoginComponent} from './login/login.component';
+import {AuthGuard} from './service/auth.guard';
+import {HomeComponent} from './home/home.component';
+import {ClientComponent} from './client/client.component';
+import {AdminComponent} from './admin_section/admin.component';
+import {AdminGuard} from './service/admin.guard';
+import {RegComponent} from './register/reg.component';
+import {TourSelectionComponent} from './tour_selection/tour.selection.component';
+import {UserComponent} from './admin_section/manage_users/user.component';
+
+const routes: Routes = [
+  {path: 'login', component: LoginComponent},
+  {path: 'signup', component: RegComponent},
+  {path: 'select', component: TourSelectionComponent},
+  {path: 'room', component: ClientComponent, canActivate: [AuthGuard]},
+  {
+    path: 'admin', component: AdminComponent, canActivate: [AdminGuard], children: [
+      {path: 'user', component: UserComponent}
+    ]
+  },
+  {path: '', component: HomeComponent},
+  {path: '**', redirectTo: ''}
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule {
+}
