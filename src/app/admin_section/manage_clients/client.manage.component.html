@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="col-md-4">
+    <label for="clients">Список клиентов</label>
+    <select #clientsList id="clients" class="form-control" (change)="switchClient(clientsList.value)" size="5">
+      <option *ngFor="let item of clients" [value]="item.id" [selected]="clients.indexOf(item) == 0">
+        {{item.firstName}} {{item.lastName}}
+      </option>
+    </select>
+    <div class="btn-group-vertical mt-3">
+      <button type="button" class="btn btn-danger" [disabled]="currentClient.id == 0" data-toggle="modal"
+              data-target="#confirmDelete">
+        Удалить клиента
+      </button>
+    </div>
+  </div>
+  <div class="modal fade" id="confirmDelete">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Подтверждение удаления</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <label>Вы хотите удалить пользователя {{currentClient.firstName}} {{currentClient.lastName}}?</label>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" (click)="deleteClient()" data-dismiss="modal">Удалить</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Отмена</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="col-md" [hidden]="!isVisibleInfo">
+    <div [hidden]="currentClient == null">
+      <label>Данные о клиенте</label>
+      <div class="form-group">
+        <label for="firstName">Имя:</label>
+        <input type="text" class="form-control" id="firstName" [value]="currentClient.firstName" disabled="disabled">
+      </div>
+      <div class="form-group">
+        <label for="lastName">Фамилия:</label>
+        <input type="text" class="form-control" id="lastName" [value]="currentClient.lastName" disabled="disabled">
+      </div>
+      <div class="form-group">
+        <label for="birthDate">Дата рождения:</label>
+        <input type="date" class="form-control" id="birthDate" [value]="birthDate" disabled="disabled">
+      </div>
+      <div class="form-group">
+        <label for="email">E-mail:</label>
+        <input type="email" class="form-control" id="email" [value]="currentClient.email" disabled="disabled">
+      </div>
+    </div>
+  </div>
+</div>

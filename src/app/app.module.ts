@@ -20,6 +20,7 @@ import {TourSelectionComponent} from './tour_selection/tour.selection.component'
 import {TourService} from './service/tour.service';
 import {UserComponent} from './admin_section/manage_users/user.component';
 import {UserService} from './service/user.service';
+import {ClientManageComponent} from './admin_section/manage_clients/client.manage.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {UserService} from './service/user.service';
     AdminComponent,
     RegComponent,
     TourSelectionComponent,
-    UserComponent
+    UserComponent,
+    ClientManageComponent
   ],
   imports: [
     BrowserModule,

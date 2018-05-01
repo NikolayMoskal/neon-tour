@@ -30,6 +30,12 @@ export class UserComponent implements OnInit {
     this.userService.getAllUsers().subscribe(
       (data: User[]) => {
         this.users = data;
+        for (let index = 0; index < this.users.length; index++) {
+          this.users[index].client.birthDate = new Date(+this.users[index].client.birthDate);
+          const date = this.users[index].client.birthDate;
+          date.setHours(date.getHours() + -date.getTimezoneOffset() / 60);
+          this.users[index].client.birthDate = date;
+        }
         this.switchUser('1');
       }
     );
@@ -38,10 +44,7 @@ export class UserComponent implements OnInit {
   switchUser(id): void {
     this.isVisibleUserInfo = true;
     this.currentUser = this.users.find(value => value.id === parseInt(id, 0));
-    this.currentUser.client.birthDate = new Date(+this.currentUser.client.birthDate);
-    const date = this.currentUser.client.birthDate;
-    date.setHours(date.getHours() + -date.getTimezoneOffset() / 60);
-    this.birthDate = date.toISOString().substring(0, 10);
+    this.birthDate = this.currentUser.client.birthDate.toISOString().substring(0, 10);
     this.username = this.currentUser.username;
     this.userpass = this.currentUser.password;
     this.isEnabled = this.currentUser.enabled;
@@ -131,7 +134,6 @@ export class UserComponent implements OnInit {
     if (index > -1) {
       this.users.splice(index, 1);
     }
-    console.log(this.currentUser);
     this.userService.deleteUser(this.currentUser.id).subscribe();
     this.currentUser = null;
     this.username = '';

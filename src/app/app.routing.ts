@@ -9,6 +9,7 @@ import {AdminGuard} from './service/admin.guard';
 import {RegComponent} from './register/reg.component';
 import {TourSelectionComponent} from './tour_selection/tour.selection.component';
 import {UserComponent} from './admin_section/manage_users/user.component';
+import {ClientManageComponent} from './admin_section/manage_clients/client.manage.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -17,7 +18,8 @@ const routes: Routes = [
   {path: 'room', component: ClientComponent, canActivate: [AuthGuard]},
   {
     path: 'admin', component: AdminComponent, canActivate: [AdminGuard], children: [
-      {path: 'user', component: UserComponent}
+      {path: 'user', component: UserComponent},
+      {path: 'client', component: ClientManageComponent}
     ]
   },
   {path: '', component: HomeComponent},
