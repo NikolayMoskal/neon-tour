@@ -30,7 +30,7 @@
                 <button class="btn btn-outline-secondary" (click)="username = ''">&times;</button>
               </div>
             </div>
-            <small id="usernameHelp" class="text-muted">Must starts with letter and be 4-15 characters long</small>
+            <small id="usernameHelp" class="text-muted">Должно начинаться с буквы и содержать 4-15 символов</small>
             <div class="alert alert-danger" *ngIf="usernameError != ''">{{usernameError}}</div>
           </div>
           <div class="form-group my-2">
@@ -46,7 +46,7 @@
                 <button type="button" class="btn btn-outline-secondary" (click)="userpass = ''">&times;</button>
               </div>
             </div>
-            <small id="passwordHelp" class="text-muted">Must be 8-20 characters long</small>
+            <small id="passwordHelp" class="text-muted">Должен быть от 8 до 20 символов</small>
             <div class="alert alert-danger" *ngIf="passwordError != ''">{{passwordError}}</div>
           </div>
           <div class="form-group my-2">
@@ -58,7 +58,7 @@
                 <button type="button" class="btn btn-outline-secondary" (click)="confirmPassword = ''">&times;</button>
               </div>
             </div>
-            <small id="confirmPasswordHelp" class="text-muted">Must be a same as password</small>
+            <small id="confirmPasswordHelp" class="text-muted">Должен быть таким же, как и пароль</small>
             <div class="alert alert-danger" *ngIf="confirmPasswordError != ''">{{confirmPasswordError}}</div>
           </div>
           <button type="submit" class="btn btn-success" (click)="submitChanges()" [hidden]="!isChanges">Сохранить

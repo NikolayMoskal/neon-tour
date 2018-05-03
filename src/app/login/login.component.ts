@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {AuthService} from '../service/auth.service';
 import {Jwt} from '../model/jwt';
 import {Title} from '@angular/platform-browser';
+import {AppConfig} from '../app.config';
 
 @Component({
   moduleId: module.id,
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router,
               private authService: AuthService,
-              private titleService: Title) {
+              private titleService: Title,
+              private config: AppConfig) {
   }
 
   ngOnInit() {
@@ -40,6 +42,8 @@ export class LoginComponent implements OnInit {
             }));
             // login successful
             this.router.navigate(['/']);
+            this.config.showAdmin(this.authService.hasRole('ROLE_ADMIN'));
+            this.config.showPrivateRoom(this.authService.hasRole('ROLE_USER'));
           } else {
             // login failed
             this.error = 'Username or password is incorrect';
@@ -50,5 +54,14 @@ export class LoginComponent implements OnInit {
           this.error = error;
         }
       );
+  }
+
+  compareArrays(roles: string[], role: string): boolean {
+    for (let item of roles) {
+      if (item === role) {
+        return true;
+      }
+    }
+    return false;
   }
 }

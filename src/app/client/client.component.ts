@@ -1,22 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {Client} from '../model/client';
-import {ClientService} from '../service/client.service';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   moduleId: module.id,
   templateUrl: './client.component.html',
-  styleUrls: ['./client.component.css'],
-  providers: [ClientService]
+  styleUrls: ['./client.component.css']
 })
 export class ClientComponent implements OnInit {
-  user: Client;
-
-  constructor(private httpService: ClientService) {
+  constructor(private title: Title) {
   }
 
   ngOnInit() {
-    this.httpService.getData().subscribe(
-      (data: Client) => this.user = data
-    );
+    this.title.setTitle('Личный кабинет - Neon Tour');
   }
 }

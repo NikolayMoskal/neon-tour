@@ -21,6 +21,10 @@ import {TourService} from './service/tour.service';
 import {UserComponent} from './admin_section/manage_users/user.component';
 import {UserService} from './service/user.service';
 import {ClientManageComponent} from './admin_section/manage_clients/client.manage.component';
+import {AppConfig} from './app.config';
+import {ClientOrderComponent} from './client/orders/client.order.component';
+import {ClientProfileComponent} from './client/profile/client.profile.component';
+import {ClientDataComponent} from './client/personal_data/client.data.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +38,10 @@ import {ClientManageComponent} from './admin_section/manage_clients/client.manag
     RegComponent,
     TourSelectionComponent,
     UserComponent,
-    ClientManageComponent
+    ClientManageComponent,
+    ClientOrderComponent,
+    ClientProfileComponent,
+    ClientDataComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +56,8 @@ import {ClientManageComponent} from './admin_section/manage_clients/client.manag
     AuthGuard,
     AdminGuard,
     TourService,
-    UserService
+    UserService,
+    AppConfig
   ],
   bootstrap: [
     AppComponent,

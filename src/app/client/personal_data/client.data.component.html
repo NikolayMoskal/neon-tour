@@ -1,0 +1,32 @@
+<form class="needs-validation" novalidate>
+  <div class="form-group">
+    <label for="firstName">Имя:</label>
+    <input type="text" class="form-control" id="firstName" name="firstname" aria-describedby="firstNameHelp"
+           [(ngModel)]="currentClient.firstName" required>
+    <small class="form-text text-muted" id="firstNameHelp">Пожалуйста, введите настоящее имя. Это очень важно.</small>
+    <div class="alert alert-danger" *ngIf="errFirstName != ''">{{errFirstName}}</div>
+  </div>
+  <div class="form-group">
+    <label for="lastName">Фамилия:</label>
+    <input type="text" class="form-control" id="lastName" name="lastname" aria-describedby="lastNameHelp"
+           [(ngModel)]="currentClient.lastName" required>
+    <small class="form-text text-muted" id="lastNameHelp">То же самое касается и фамилии :)</small>
+    <div class="alert alert-danger" *ngIf="errLastName != ''">{{errLastName}}</div>
+  </div>
+  <div class="form-group">
+    <label for="birthDate">Дата рождения:</label>
+    <input type="date" class="form-control" id="birthDate" name="birthdate" aria-describedby="birthDateHelp"
+           [(ngModel)]="birthDate" required>
+    <small class="form-text text-muted" id="birthDateHelp">Выберите вашу дату рождения</small>
+    <div class="alert alert-danger" *ngIf="errDate != ''">{{errDate}}</div>
+  </div>
+  <div class="form-group">
+    <label for="email">E-mail:</label>
+    <input type="email" class="form-control" id="email" name="e-mail" aria-describedby="emailHelp"
+           [(ngModel)]="currentClient.email" required>
+    <small class="form-text text-muted" id="emailHelp">Не забудьте о формате e-mail адреса, н-р: user@domain.com</small>
+    <div class="alert alert-danger" *ngIf="errMail != ''">{{errMail}}</div>
+  </div>
+  <button type="submit" class="btn btn-success" (click)="submitChanges()">Сохранить изменения</button>
+  <button type="button" class="btn btn-danger" (click)="rejectChanges()">Отмена</button>
+</form>

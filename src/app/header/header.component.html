@@ -25,20 +25,25 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
-          <ul class="navbar-nav">
+          <ul class="navbar-nav mr-auto">
             <li class="nav-item"><a class="nav-link" routerLink="/">Главная</a></li>
             <li class="nav-item"><a class="nav-link" routerLink="/select">Туристам</a></li>
             <li class="nav-item"><a class="nav-link" routerLink="/">Home</a></li>
-            <li class="nav-item" *ngIf="isLoggedIn"><a class="nav-link" routerLink="/admin">Управление</a></li>
+            <li class="nav-item" *ngIf="isLoggedInAdmin"><a class="nav-link" routerLink="/admin">Управление</a></li>
           </ul>
+          <form class="form-inline">
+            <button class="btn btn-info mr-3" *ngIf="isLoggedInUser" type="button">
+              <a routerLink="/room">
+                Личный кабинет
+              </a>
+            </button>
+            <button class="btn btn-success" type="button">
+              <a routerLink="/login">
+                Вход на сайт
+              </a>
+            </button>
+          </form>
         </div>
-        <form class="form-inline">
-          <button class="btn btn-success" type="button">
-            <a routerLink="/login">
-              Вход на сайт
-            </a>
-          </button>
-        </form>
       </nav>
     </div>
   </div>
