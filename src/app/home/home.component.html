@@ -1,3 +1,35 @@
 <article>
-  <p>Приветствуем на нашем сайте!</p>
+  <div class="row mb-5">
+    <div class="col-md">
+      <p class="h2">{{news.title}}</p>
+      <small class="form-text text-muted">{{news.description}}</small>
+      <div class="row">
+        <div class="col-md-2"><label>Адрес источника</label></div>
+        <div class="col-md-2">
+          <small class="form-text text-muted">
+            <a href="{{news.url}}">{{news.url}}</a>
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md">
+      <div *ngFor="let item of news.items">
+        <p class="h3 text-success">{{item.title}}</p>
+        <div class="row">
+          <div class="col-md-3">
+            <label class="text-muted">Дата публикации</label>
+          </div>
+          <div class="col-md">
+            <label class="text-info">{{timestampToDateString(item.created)}}</label>
+          </div>
+        </div>
+        <a href="{{item.link}}">Ссылка на новость</a>
+        <div [innerHtml]="item.description"></div>
+        <hr>
+      </div>
+    </div>
+  </div>
 </article>

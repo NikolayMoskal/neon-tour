@@ -3,4 +3,5 @@ export class Hotel {
   hotelName: string;
   address: string;
   price: number;
+  selected = false;
 }

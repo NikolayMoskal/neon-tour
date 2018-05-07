@@ -21,7 +21,5 @@ export class HeaderComponent implements OnInit {
     this.config.SHOW_PRIVATE_ROOM.subscribe(message => this.isLoggedInUser = message);
     this.isLoggedInAdmin = this.authService.isLoggedIn() && this.authService.hasRole('ROLE_ADMIN');
     this.isLoggedInUser = this.authService.isLoggedIn() && this.authService.hasRole('ROLE_USER');
-    console.log(this.isLoggedInUser);
-    console.log(this.isLoggedInAdmin);
   }
 }

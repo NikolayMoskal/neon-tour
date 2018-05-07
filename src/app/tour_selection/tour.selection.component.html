@@ -1,39 +1,111 @@
 <div>
-  <div class="form-group">
-    <label for="country-from">Страна проживания</label>
-    <select #selCntrFrom id="country-from" class="form-control" (change)="changeCountryFrom(selCntrFrom.value)"
-            [(ngModel)]="selCountryFrom">
-      <option *ngFor="let item of countryFrom" [value]="item.id">{{item.name}}</option>
-    </select>
+  <div class="form-row">
+    <div class="form-group col-md">
+      <label for="country-from">Страна проживания</label>
+      <select #selCntrFrom id="country-from" class="form-control" (change)="changeCountryFrom(selCntrFrom.value)">
+        <option hidden selected disabled></option>
+        <option *ngFor="let item of countryFrom" [value]="item.id">{{item.name}}</option>
+      </select>
+    </div>
+    <div class="form-group col-md">
+      <label for="location-from">Город</label>
+      <select id="location-from" class="form-control">
+        <option hidden selected disabled></option>
+        <option *ngFor="let item of cities">{{item.name}}</option>
+      </select>
+    </div>
   </div>
-  <p>{{selCountryFrom}}</p>
-  <div class="form-group">
-    <label for="location-from">Город</label>
-    <select id="location-from" class="form-control">
-      <option *ngFor="let item of cities">{{item.name}}</option>
-    </select>
+  <div class="form-row">
+    <div class="form-group col-md">
+      <label for="country-to">Куда</label>
+      <select #selCntrTo id="country-to" class="form-control" (change)="changeCountryTo(selCntrTo.value)">
+        <option *ngFor="let item of countryTo" [value]="item.id">{{item.countryName}}</option>
+      </select>
+    </div>
+    <div class="form-group col-md">
+      <label for="category">Уровень отеля</label>
+      <select #selCategory id="category" class="form-control" (change)="changeCategory(selCategory.value)">
+        <option hidden selected disabled></option>
+        <option *ngFor="let item of categories" [value]="item.id">{{item.description}}</option>
+      </select>
+    </div>
   </div>
-  <div class="form-group">
-    <label for="country-to">Куда</label>
-    <select #selCntrTo id="country-to" class="form-control" (change)="changeCountryTo(selCntrTo.value)">
-      <option *ngFor="let item of countryTo" [value]="item.id">{{item.countryName}}</option>
-    </select>
+  <div class="form-row">
+    <div class="form-group col-md">
+      <label for="startDate">Дата заезда</label>
+      <input type="date" class="form-control" [value]="startDate" id="startDate">
+    </div>
+    <div class="form-group col-md">
+      <label for="endDate">Дата выезда</label>
+      <input type="date" class="form-control" [value]="endDate" id="endDate">
+    </div>
+    <div class="form-group col-md">
+      <label for="currency">Показать в валюте</label>
+      <select #selCurrency class="form-control" id="currency" (change)="changeCurrency(selCurrency.value)">
+        <option *ngFor="let item of currencyList" [value]="item.rate">{{item.name}}</option>
+      </select>
+    </div>
   </div>
-  <div class="form-group">
-    <label for="location-to">Регионы</label>
-    <select #selectLocation id="location-to" class="form-control" (change)="changeLocation(selectLocation.value)">
-      <option *ngFor="let item of locations" [value]="item.id">{{item.shortDescription}}</option>
-    </select>
+  <div class="form-row">
+    <fieldset class="form-group col-md-6">
+      <div class="row mb-3">
+        <div class="col-md">
+          <label for="location-to">Регионы</label>
+          <select #selectLocation id="location-to" class="form-control" (change)="changeLocation(selectLocation.value)">
+            <option *ngFor="let item of locations" [value]="item.id">{{item.shortDescription}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md">
+          <label for="priceFrom">Стоимость тура (от)</label>
+          <div class="clearfix">
+            <span class="float-left">{{minPriceFrom}}</span>
+            <span class="float-right">{{maxPriceFrom}}</span>
+          </div>
+          <input type="range" id="priceFrom" class="form-control" [(ngModel)]="priceFrom">
+        </div>
+        <div class="col-md">
+          <label for="priceTo">Стоимость тура (до)</label>
+          <div class="clearfix">
+            <span class="float-left">{{minPriceTo}}</span>
+            <span class="float-right">{{maxPriceTo}}</span>
+          </div>
+          <input type="range" id="priceTo" class="form-control" [(ngModel)]="priceTo">
+        </div>
+      </div>
+    </fieldset>
+    <fieldset class="form-group col-md-6" [hidden]="hotels == null">
+      <div class="form-check" *ngFor="let item of hotels">
+        <label class="form-check-label">
+          <input type="radio" name="hotelRadioButtons" class="form-check-input" [value]="item.selected"
+                 (change)="changeSelectHotel(item.id)">
+          {{item.hotelName}}
+        </label>
+      </div>
+    </fieldset>
   </div>
-  <div class="form-group">
-    <label for="category">Уровень отеля</label>
-    <select #selCategory id="category" class="form-control" (change)="changeCategory(selCategory.value)">
-      <option *ngFor="let item of categories" [value]="item.id">{{item.description}}</option>
-    </select>
-  </div>
-  <div class="form-check" *ngFor="let item of hotels">
-    <label class="form-check-label">
-      <input type="checkbox" class="form-check-input" [value]="item.id">{{item.hotelName}}
-    </label>
-  </div>
+  <button type="button" class="btn btn-success" (click)="findTours()">Найти</button>
+  <table class="table table-striped table-bordered mt-3" *ngIf="tours != null">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col">Отель</th>
+      <th scope="col">Даты пребывания</th>
+      <th scope="col">Цена тура</th>
+      <th scope="col">Описание тура</th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of tours">
+      <td>{{item.hotel.hotelName}}</td>
+      <td>{{timestampToDateString(item.startDate)}} - {{timestampToDateString(item.endDate)}}</td>
+      <td>{{item.price}}</td>
+      <td>{{item.description}}</td>
+      <td>
+        <button type="button" (click)="makeOrder(item)">Заказать</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
 </div>

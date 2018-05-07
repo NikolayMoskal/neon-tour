@@ -3,10 +3,10 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {AppConfig} from '../app.config';
 
 @Injectable()
 export class AuthService {
-  private authUrl = 'http://localhost:8080/NeonTour/login';
   private headers = new HttpHeaders({
     'Content-Type': 'application/json',
     'Accept': 'application/json'
@@ -16,7 +16,10 @@ export class AuthService {
   }
 
   login(username: string, password: string) {
-    return this.http.post(this.authUrl, JSON.stringify({username: username, password: password}), {headers: this.headers});
+    return this.http.post(AppConfig.APP_SERVER_URL + '/login', JSON.stringify({
+      username: username,
+      password: password
+    }), {headers: this.headers});
   }
 
   getToken(): string {

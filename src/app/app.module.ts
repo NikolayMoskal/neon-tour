@@ -25,6 +25,7 @@ import {AppConfig} from './app.config';
 import {ClientOrderComponent} from './client/orders/client.order.component';
 import {ClientProfileComponent} from './client/profile/client.profile.component';
 import {ClientDataComponent} from './client/personal_data/client.data.component';
+import {RssService} from './service/rss.service';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import {ClientDataComponent} from './client/personal_data/client.data.component'
     AdminGuard,
     TourService,
     UserService,
-    AppConfig
+    AppConfig,
+    RssService
   ],
   bootstrap: [
     AppComponent,
