@@ -73,4 +73,8 @@ export class TourService {
       return this.http.get(AppConfig.APP_SERVER_URL + '/tour/get?hotel=' + hotel, {headers: this.headers});
     }
   }
+
+  getAllTours(): Observable<any> {
+    return this.http.get(AppConfig.APP_SERVER_URL + '/tour/get/all', {headers: this.headers});
+  }
 }

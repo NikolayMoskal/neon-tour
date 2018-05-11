@@ -26,6 +26,7 @@ import {ClientOrderComponent} from './client/orders/client.order.component';
 import {ClientProfileComponent} from './client/profile/client.profile.component';
 import {ClientDataComponent} from './client/personal_data/client.data.component';
 import {RssService} from './service/rss.service';
+import {OrderService} from './service/order.service';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import {RssService} from './service/rss.service';
     TourService,
     UserService,
     AppConfig,
-    RssService
+    RssService,
+    OrderService
   ],
   bootstrap: [
     AppComponent,

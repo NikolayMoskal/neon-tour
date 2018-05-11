@@ -12,12 +12,15 @@ import {Tour} from '../model/tour';
 import {AuthService} from '../service/auth.service';
 import {User} from '../model/user';
 import {UserService} from '../service/user.service';
+import {OrderService} from '../service/order.service';
+import {Order} from '../model/order';
+import {Client} from '../model/client';
 
 @Component({
   moduleId: module.id,
   templateUrl: './tour.selection.component.html',
   styleUrls: ['./tour.selection.component.css'],
-  providers: [TourService]
+  providers: [TourService, OrderService]
 })
 export class TourSelectionComponent implements OnInit {
   currentUser: User;
@@ -37,14 +40,20 @@ export class TourSelectionComponent implements OnInit {
   priceFrom: number;
   priceTo: number;
   maxPriceFrom = '1';
+  minPF = 1;
   minPriceFrom = '1';
+  maxPF = 1;
   maxPriceTo = '1';
+  minPT = 1;
   minPriceTo = '1';
+  maxPT = 1;
+  error = false;
 
   constructor(private titleService: Title,
               private tourService: TourService,
               private authService: AuthService,
-              private userService: UserService) {
+              private userService: UserService,
+              private orderService: OrderService) {
   }
 
   ngOnInit() {
@@ -63,6 +72,19 @@ export class TourSelectionComponent implements OnInit {
     );
     this.tourService.getCategories().subscribe((data: HotelCategory[]) => this.categories = data);
     this.tourService.getCurrencyList().subscribe((data: Currency[]) => this.currencyList = data);
+    this.tourService.getAllTours().subscribe(
+      (data: Tour[]) => {
+        this.tours = data;
+        this.maxPriceFrom = this.findMax().toString();
+        this.minPriceFrom = this.findMin().toString();
+        this.maxPriceTo = this.maxPriceFrom;
+        this.minPriceTo = this.minPriceFrom;
+        this.minPF = parseFloat(this.minPriceFrom);
+        this.maxPF = parseFloat(this.maxPriceFrom);
+        this.minPT = parseFloat(this.minPriceTo);
+        this.maxPT = parseFloat(this.maxPriceTo);
+      }
+    );
   }
 
   changeCountryFrom(id): void {
@@ -127,32 +149,71 @@ export class TourSelectionComponent implements OnInit {
     this.tourService.getTours(this.priceFrom, this.priceTo, ts1, ts2, hotel.hotelName).subscribe(
       (data: Tour[]) => {
         this.tours = data;
+        this.maxPriceFrom = this.findMax().toString();
+        this.minPriceFrom = this.findMin().toString();
+        this.maxPriceTo = this.maxPriceFrom;
+        this.minPriceTo = this.minPriceFrom;
+        this.minPF = parseFloat(this.minPriceFrom);
+        this.maxPF = parseFloat(this.maxPriceFrom);
+        this.minPT = parseFloat(this.minPriceTo);
+        this.maxPT = parseFloat(this.maxPriceTo);
       }
     );
   }
 
+  findMax(): number {
+    let max = this.tours[0].price;
+    for (let item = 0; item < this.tours.length; item++) {
+      if (this.tours[item].price > max) {
+        max = this.tours[item].price;
+      }
+    }
+    return max;
+  }
+
+  findMin(): number {
+    let min = this.tours[0].price;
+    for (let item = 0; item < this.tours.length; item++) {
+      if (this.tours[item].price < min) {
+        min = this.tours[item].price;
+      }
+    }
+    return min;
+  }
+
   changeCurrency(rate): void {
     this.currentRate = rate;
-    this.minPriceFrom = (parseFloat(this.currentRate) * parseFloat(this.minPriceFrom)).toFixed(2);
-    this.maxPriceFrom = (parseFloat(this.currentRate) * parseFloat(this.maxPriceFrom)).toFixed(2);
-    this.minPriceTo = (parseFloat(this.currentRate) * parseFloat(this.minPriceTo)).toFixed(2);
-    this.maxPriceTo = (parseFloat(this.currentRate) * parseFloat(this.maxPriceTo)).toFixed(2);
+    this.minPriceFrom = (parseFloat(this.currentRate) * this.findMin()).toFixed(2);
+    this.maxPriceFrom = (parseFloat(this.currentRate) * this.findMax()).toFixed(2);
+    this.minPriceTo = (parseFloat(this.currentRate) * this.findMin()).toFixed(2);
+    this.maxPriceTo = (parseFloat(this.currentRate) * this.findMax()).toFixed(2);
+    this.minPF = parseFloat(this.minPriceFrom);
+    this.maxPF = parseFloat(this.maxPriceFrom);
+    this.minPT = parseFloat(this.minPriceTo);
+    this.maxPT = parseFloat(this.maxPriceTo);
   }
 
   timestampToDateString(ts: number): string {
     return new Date(ts).toLocaleDateString();
   }
 
-  makeOrder(tour): void {
+  makeOrder(tour: Tour): void {
     if (this.authService.isLoggedIn() && this.authService.hasRole('ROLE_USER')) {
+      this.error = false;
       this.userService.getAllUsers().subscribe(
         (data: User[]) => {
           const json = localStorage.getItem('currentUser');
           const user = json ? JSON.parse(json) : null;
-          this.currentUser = data.find(value => value.username = user.username);
-          // this.copy = Object.assign(new User(), this.currentUser);
+          this.currentUser = data.find(value => value.username === user.username);
+          const order: Order = new Order();
+          order.client = Object.assign(new Client(), this.currentUser.client);
+          order.date = new Date();
+          order.tour = Object.assign(new Tour(), tour);
+          this.orderService.addOrder(order).subscribe();
         }
       );
+    } else {
+      this.error = true;
     }
   }
 }

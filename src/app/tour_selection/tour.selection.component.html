@@ -63,7 +63,7 @@
             <span class="float-left">{{minPriceFrom}}</span>
             <span class="float-right">{{maxPriceFrom}}</span>
           </div>
-          <input type="range" id="priceFrom" class="form-control" [(ngModel)]="priceFrom">
+          <input type="range" id="priceFrom" [min]="minPF" [max]="maxPF" class="form-control" [(ngModel)]="priceFrom">
         </div>
         <div class="col-md">
           <label for="priceTo">Стоимость тура (до)</label>
@@ -71,7 +71,7 @@
             <span class="float-left">{{minPriceTo}}</span>
             <span class="float-right">{{maxPriceTo}}</span>
           </div>
-          <input type="range" id="priceTo" class="form-control" [(ngModel)]="priceTo">
+          <input type="range" id="priceTo" [min]="minPT" [max]="maxPT" class="form-control" [(ngModel)]="priceTo">
         </div>
       </div>
     </fieldset>
@@ -108,4 +108,5 @@
     </tr>
     </tbody>
   </table>
+  <label class="alert alert-danger" *ngIf="error">Вы не зарегистрированы как пользователь для совершения заказов</label>
 </div>

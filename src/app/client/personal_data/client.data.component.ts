@@ -24,7 +24,7 @@ export class ClientDataComponent {
       (data: User[]) => {
         const json = localStorage.getItem('currentUser');
         const user = json ? JSON.parse(json) : null;
-        this.currentUser = data.find(value => value.username = user.username);
+        this.currentUser = data.find(value => value.username === user.username);
         this.currentClient = Object.assign(new Client(), this.currentUser.client);
         this.rejectChanges();
       }

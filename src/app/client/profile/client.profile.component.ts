@@ -24,7 +24,7 @@ export class ClientProfileComponent implements OnInit {
       (data: User[]) => {
         const json = localStorage.getItem('currentUser');
         const user = json ? JSON.parse(json) : null;
-        this.currentUser = data.find(value => value.username = user.username);
+        this.currentUser = data.find(value => value.username === user.username);
         this.copy = Object.assign(new User(), this.currentUser);
       }
     );
